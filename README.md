@@ -9,7 +9,7 @@ The core dataset comes from Jeff Sackmann’s open tennis data repositories on G
 #### Data Sources
 
 - **ATP Match Results (2020–2024)**  
-  - Source: Jeff Sackmann’s `tennis_atp` repository  
+  - Source: Jeff Sackmann’s [`tennis_atp`](https://github.com/JeffSackmann/tennis_atp) repository  
   - Files used:
     - `atp_matches_2020.csv`
     - `atp_matches_2021.csv`
@@ -140,37 +140,29 @@ Later, we may compute **rolling / historical** stats per player (e.g., last 10 m
   - `notebooks/03_modeling.ipynb` – training and evaluation  
   - `src/` – reusable preprocessing and modeling scripts
 
+#### Data Source & License
+
+This project uses tennis match data from **Jeff Sackmann’s Tennis Abstract**.
+
+- Original data repository: [JeffSackmann/tennis_atp](https://github.com/JeffSackmann/tennis_atp)  
+- Author: Jeff Sackmann / Tennis Abstract  
+- Website: [TennisAbstract.com](http://www.tennisabstract.com/)
+
+The original data is licensed under the  
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+> “Tennis databases, files, and algorithms by Jeff Sackmann / Tennis Abstract is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.  
+> Based on a work at https://github.com/JeffSackmann.”
+
+Accordingly:
+
+- This project’s use of the data is **non-commercial**.  
+- Attribution is provided to Jeff Sackmann / Tennis Abstract.  
+- Any derived datasets in this repository are also intended to be shared under **CC BY-NC-SA 4.0**.
+
 #### How to Recreate the Dataset
 
 1. Install Python and dependencies (example):
 
 ```bash
 pip install pandas requests
-```
-
-2. Download and combine yearly files:
-
-```python
-import pandas as pd
-import requests
-from io import StringIO
-
-years = [2020, 2021, 2022, 2023, 2024]
-dfs = []
-
-for year in years:
-    url = f"https://raw.githubusercontent.com/JeffSackmann/tennis_atp/master/atp_matches_{year}.csv"
-    df = pd.read_csv(url)
-    dfs.append(df)
-
-combined = pd.concat(dfs, ignore_index=True)
-combined.to_csv("atp_matches_2020_2024.csv", index=False)
-```
-
-#### Next Steps
-
-- Implement a preprocessing script to:
-  - Build player-pair features
-  - Split data into train/validation/test by date
-- Train baseline models and log performance.
-- Iterate on more advanced features (player form, surface-specific stats, head-to-head, etc.).
